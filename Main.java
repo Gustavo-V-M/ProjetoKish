@@ -29,11 +29,11 @@ public class Main {
         case 1:
           System.out.println("Informe o caminho e nome do arquivo ED2: ");
           String filePath = scanner.nextLine();
-          if (ValidateFile.validateFile(filePath)) {
+          if (FilesMethods.validateFile(filePath)) {
             System.out.println("Arquivo ED2 válido");
             System.out.println("Informe o nome do novo arquivo para salvar os dados: ");
             String newFilePath = scanner.nextLine();
-            if (writeFile(filePath, newFilePath)) {
+            if (FilesMethods.writeFile(filePath, newFilePath)) {
               System.out.println("Dados salvos no arquivo: " + newFilePath);
             } else {
               System.out.println("Erro ao salvar os dados no novo arquivo");
