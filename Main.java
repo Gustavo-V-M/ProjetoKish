@@ -8,6 +8,7 @@ public class Main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     int option;
+    String filePath = "";
 
     // Menu das opções
     do {
@@ -28,31 +29,50 @@ public class Main {
       switch (option) {
         case 1:
           System.out.println("Informe o caminho e nome do arquivo ED2: ");
-          String filePath = scanner.nextLine();
+          filePath = scanner.nextLine();
           if (FilesMethods.validateFile(filePath)) {
             System.out.println("Arquivo ED2 válido");
-            System.out.println("Informe o nome do novo arquivo para salvar os dados: ");
-            String newFilePath = scanner.nextLine();
-            if (FilesMethods.writeFile(filePath, newFilePath)) {
-              System.out.println("Dados salvos no arquivo: " + newFilePath);
-            } else {
-              System.out.println("Erro ao salvar os dados no novo arquivo");
-            }
           } else {
             System.out.println("Formato de arquivo inválido");
+            filePath = ""; //Reseta o filePath se for inválido
           }
           break;
 
         case 2:
           // Buscar uma chave/escopo na árvore
+          System.out.println("Informe a chave/escopo na árvore que deseja buscar: ");
+
+
         case 3:
           // Inserir uma chave/escopo da árvore
+          System.out.println("Informe o que deseja inserir na árvore: ");
+
+
         case 4:
           // Alterar uma chave da árvore
+          System.out.println("Informe qual chave/escopo na árvore deseja alterar: ");
+
+
         case 5:
           // Remover uma chave da árvore
+          System.out.println("Informe qual chave/escopo na árvore deseja remover: ");
+
+
         case 6:
           // Salvar dados para um arquivo
+          if(!filePath.isEmpty()){
+            System.out.println("Informe o nome do novo arquivo para salvamento dos dados: ");
+            String newFilePath = scanner.nextLine();
+            if(FilesMethods.writeFile(filePath,newFilePath)){
+              System.out.println("Dados salvos no arquivo: " + newFilePath);
+            }else{
+              System.out.println("Erro ao salvar os dados");
+            }
+          }else{
+            System.out.println("Nenhum arquivo ED2 aberto.");
+          }
+          
+
         case 7:
           // Exibir conteúdo e as propriedades da árvore BST
         case 8:
