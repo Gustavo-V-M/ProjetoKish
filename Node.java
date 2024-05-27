@@ -6,6 +6,7 @@ public class Node {
     private int balanceFactor;
     private int id;
     private final Node root;
+    private int height;
 
     public Node(Token token) {
         this.token = token;
@@ -43,6 +44,13 @@ public class Node {
     }
     public void setBalanceFactor(int balanceFactor){
         this.balanceFactor = balanceFactor;
+    }
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public Node getLeft() {
@@ -123,12 +131,17 @@ public class Node {
         if (node == null) {
             return -1;
         }
-
+        if (node.getHeight() != -1) {
+            return node.getHeight();
+        }
         int leftHeight = getNodeHeight(node.getLeft());
         int rightHeight = getNodeHeight(node.getRight());
-
-        return 1 + Math.max(leftHeight, rightHeight);
+        int height = Math.max(leftHeight, rightHeight) + 1;
+        node.setHeight(height);
+        return height;
     }
+
+
 
     public Token getToken() {
         return token;
