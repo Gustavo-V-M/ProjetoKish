@@ -5,6 +5,7 @@ public class Node {
     private Node left;
     private int balanceFactor;
     private int id;
+    private final Node root;
 
     public Node(Token token) {
         this.token = token;
@@ -12,6 +13,7 @@ public class Node {
         left = null;
         parent = null;
         balanceFactor = 0;
+        root = null;
     }
 
     public Node setRight(Node right) {
@@ -51,6 +53,10 @@ public class Node {
         return right;
     }
 
+    public Node getRoot() {
+        return root;
+    }
+
     public String getValue() {
         return token.getValue();
     }
@@ -63,50 +69,26 @@ public class Node {
         }
     }
 
-    private boolean isLeaf() {
-        if (getRight() == null && getLeft() == null) {
+    public boolean isRoot() {
+        return this.parent == null;
+    }
+
+    public boolean isLeaf() {
+        if (right == null && left == null) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
     public int getBalanceFactor(Node node){
         if (node == null) {
             return 0;
         }
-        return getNodeHeight(node.getLeft(), 0) - getNodeHeight(node.getRight(), 0);
+        return getNodeHeight(node.getLeft()) - getNodeHeight(node.getRight());
     }
-
-    public int updateBalanceFactor() {
-        if (this == null) {
-            return 0;
-        }
-        this.balanceFactor = getNodeHeight(this.getLeft(), 0) - getNodeHeight(this.getRight(), 0);
-        return this.balanceFactor;
-    }
-
-    public int getNodeHeight(Node node, int height) {
-        if (node == null) {
-            return height;
-        }
-
-        int leftHeight = getNodeHeight(node.getLeft(), height + 1);
-        int rightHeight = getNodeHeight(node.getRight(), height + 1);
-
-        return Math.max(leftHeight, rightHeight);
-    }
-
-    public Token getToken() {
-        return token;
-    }
-    public void setToken(Token token){
-        this.token = token;
-    }
-
 
     public int getDegree() {
         if (isLeaf() == true) {
-            return -1;
+            return 0;
         } else if (hasBothNodes() == true) {
             return 2;
         } else {
@@ -114,18 +96,45 @@ public class Node {
         }
     }
 
-    public int getHeight() {
-        if (isLeaf() == true) {
+    public int getLevel(Node node, int level) {
+        if (node == null) {
             return 0;
-        } else if (right == null && left != null) {
-            return 1 + left.getHeight();
-        } else if (right != null && left == null) {
-            return 1 + right.getHeight();
-        } else if (right.getHeight() >= left.getHeight()) {
-            return 1 + right.getHeight();
-        } else {
-            return 1 + left.getHeight();
         }
+        if (node.getValue().equals(this.token.getValue())) {
+            return level;
+        }
+        int downlevel = getLevel(node.left, level + 1);
+        if (downlevel != 0) {
+            return downlevel;
+        }
+        downlevel = getLevel(node.right, level + 1);
+        return downlevel;
+    }
+
+    public int updateBalanceFactor() {
+        if (this == null) {
+            return 0;
+        }
+        this.balanceFactor = getNodeHeight(this.getLeft()) - getNodeHeight(this.getRight());
+        return this.balanceFactor;
+    }
+
+    public int getNodeHeight(Node node) {
+        if (node == null) {
+            return -1;
+        }
+
+        int leftHeight = getNodeHeight(node.getLeft());
+        int rightHeight = getNodeHeight(node.getRight());
+
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+
+    public Token getToken() {
+        return token;
+    }
+    public void setToken(Token token){
+        this.token = token;
     }
 
     @Override

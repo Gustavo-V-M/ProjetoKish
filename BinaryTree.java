@@ -29,7 +29,7 @@ public class BinaryTree {
         return root;
     }
 
-    public boolean add(Token token) {
+    public boolean addBST(Token token) {
         if (searchNode(this.root, token) == null) {
             root = addRecursive(root, token, null);
             return true;
@@ -99,8 +99,18 @@ public class BinaryTree {
         return rotateRightLeft(root);
     }
 
+    public int getIdByKey(String key) {
+        Token token = new Token(key, TokenType.IDENTIFIER);
+        Node node = searchNode(root, token);
+        if (node != null) {
+            return node.getToken().getId();
+        } else {
+            System.out.println("Chave '" + key + "' não encontrada na árvore.");
+            return -1; // Retorna -1 se a chave não for encontrada
+        }
+    }
 
-    public boolean balance(Node root) {
+    public Node balance(Node root) {
         int balanceFactor = root.getBalanceFactor(root);
 
         System.out.println("Fator de balanceamento do nó " + root.getValue() + ": " + balanceFactor);
@@ -108,27 +118,23 @@ public class BinaryTree {
             if (root.getLeft().getBalanceFactor(root.getLeft()) >= 0) {
                 rotateRight(root);
                 System.out.println("Nó " + root.getValue() + " balanceado com rotação LL");
-                return true;
             }
             else {
                 rotateLeftRight(root);
                 System.out.println("Nó " + root.getValue() + " balanceado com rotação LR");
-                return true;
             }
         }
         else if (balanceFactor < -1) {
             if (root.getRight().getBalanceFactor(root.getRight()) <= 0) {
                 rotateLeft(root);
                 System.out.println("Nó " + root.getValue() + " balanceado com rotação RR");
-                return true;
             }
             else {
                 rotateRightLeft(root);
                 System.out.println("Nó " + root.getValue() + " balanceado com rotação RL");
-                return true;
             }
         }
-        return false;
+        return root;
     }
 
     public Node searchNode(Node current, Token token) {
@@ -143,6 +149,26 @@ public class BinaryTree {
             node = searchNode(current.getRight(), token);
         }
         return node;
+    }
+    public int searchNodeComparisons(Node current, Token token) {
+        int count = 0;
+
+        while (current != null) {
+            count++;
+
+            if (current.getToken().getId() == token.getId()) {
+                return count;
+            }
+
+            if (token.getId() < current.getToken().getId()) {
+                current = current.getLeft();
+            }
+            else {
+                current = current.getRight();
+            }
+        }
+
+        return -1;
     }
 
 
@@ -185,15 +211,21 @@ public class BinaryTree {
         }
     }
 
-    private void printNodeInfo(Node node) {
+    public void printNodeInfo(Node node) {
         Token token = node.getToken();
         System.out.println("Token: " + token.getValue() + " | Token type: " + token.getType() + " | ID: " + token.getId());
         System.out.println("Left:");
         printChildNodeInfo(node.getLeft());
         System.out.println("Right:");
         printChildNodeInfo(node.getRight());
+        System.out.println("é folha? " + node.isLeaf());
+        System.out.println("é raiz? " + node.isRoot());
+        System.out.println("grau:" + node.getDegree());
+        System.out.println("nivel:" + node.getLevel(this.root, 0));
+        System.out.println("Altura:" + node.getNodeHeight(node));
         System.out.println();
     }
+
 
     private void printChildNodeInfo(Node childNode) {
         if (childNode != null) {
@@ -205,5 +237,6 @@ public class BinaryTree {
             System.out.println("  null");
         }
     }
+
 }
 

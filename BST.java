@@ -1,21 +1,31 @@
 public class BST {
 
-    private void insertNode(Node root, Node newNode) {
+    private final BinaryTree bsttree;
+
+    public BST(BinaryTree binaryTree) {
+        this.bsttree = binaryTree;
+    }
+
+    public void setRoot(Node root) {
+        bsttree.setRoot(root);
+    }
+
+    private void insertNodeBST(Node root, Node newNode) {
         if (root == null) {
-            return; // Ponto de parada: chegou a um nó nulo, não há mais nada para fazer
+            return;
         }
 
         if (newNode.getToken().getId() < root.getToken().getId()) {
             if (root.getLeft() == null) {
                 root.setLeft(newNode);
             } else {
-                insertNode(root.getLeft(), newNode); // Chamada recursiva
+                insertNodeBST(root.getLeft(), newNode);
             }
         } else if (newNode.getToken().getId() > root.getToken().getId()) {
             if (root.getRight() == null) {
                 root.setRight(newNode);
             } else {
-                insertNode(root.getRight(), newNode); // Chamada recursiva
+                insertNodeBST(root.getRight(), newNode);
             }
         } else {
             // O novo nó já existe na árvore, não é necessário inserir novamente
@@ -23,23 +33,24 @@ public class BST {
         }
     }
 
-    public void insert(Node root, Node newNode) {
-        insertNode(root, newNode);
+    public Node insert(Node root, Node newNode) {
+        insertNodeBST(root, newNode);
+        return root;
     }
 
     public Node delete(Node root, int id) {
-        return deleteNode(root, id);
+        return deleteNodeBST(root, id);
     }
 
-    private Node deleteNode(Node root, int id) {
+    public Node deleteNodeBST(Node root, int id) {
         if(root == null){return root;}
         // Se o id a ser deletado é menor do que a raiz, vá para a subárvore esquerda
         if (id < root.getToken().getId()) {
-            root.setLeft(deleteNode(root.getLeft(), id));
+            root.setLeft(deleteNodeBST(root.getLeft(), id));
         }
         // Se o id a ser deletado é maior do que a raiz, vá para a subárvore direita
         else if (id > root.getToken().getId()) {
-            root.setRight(deleteNode(root.getRight(), id));
+            root.setRight(deleteNodeBST(root.getRight(), id));
         }
         // Se o id é o mesmo que o id da raiz, este é o nó a ser deletado
         else {
@@ -54,7 +65,7 @@ public class BST {
             root.setToken(nodeSucessor(root.getRight()).getToken());
 
             // Delete o sucessor
-            root.setRight(deleteNode(root.getRight(), root.getToken().getId()));
+            root.setRight(deleteNodeBST(root.getRight(), root.getToken().getId()));
         }
         return root;
     }
@@ -68,24 +79,32 @@ public class BST {
         return current;
     }
 
-    public void updateNode(Node root, int id, String newValue) {
-        updateNodeValue(root, id, newValue);
-    }
-
-    private void updateNodeValue(Node root, int id, String newValue) {
+    public Node updateBST(Node root, int id, String newValue) {
         if (root == null) {
             System.out.println("Nó com o ID " + id + " não encontrado na árvore.");
-            return;
+            return null;
         }
 
         if (id < root.getToken().getId()) {
-            updateNodeValue(root.getLeft(), id, newValue);
+            return updateBST(root.getLeft(), id, newValue);
         } else if (id > root.getToken().getId()) {
-            updateNodeValue(root.getRight(), id, newValue);
+            return updateBST(root.getRight(), id, newValue);
         } else {
             // Encontrou o nó com o ID desejado
             root.getToken().setValue(newValue);
             System.out.println("Nó com o ID " + id + " alterado para o valor: " + newValue);
+            return root;
+        }
+    }
+
+    public Node update(Node root, int id, String newValue) {
+        Node foundNode = updateBST(root, id, newValue);
+        if (foundNode != null) {
+            System.out.println("Nó com o ID " + id + " encontrado na árvore.");
+            return foundNode;
+        } else {
+            System.out.println("Nó com o ID " + id + " não encontrado na árvore.");
+            return null;
         }
     }
 }

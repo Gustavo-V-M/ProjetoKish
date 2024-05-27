@@ -50,13 +50,21 @@ public class Tokenizer {
 
     private void parse() {
         for (Token token : tokensPreparse) {
-            Node newNode = new Node(token);
+            Node newNode;
+            if (token.getType() == TokenType.SCOPE_START) {
+                newNode = parseScope(token);
+            } else if (token.getType() == TokenType.KEY) {
+                newNode = parseKey(token);
+            } else {
+                newNode = new Node(token);
+            }
+
             if (binaryTree.getRoot() == null) {
                 binaryTree.setRoot(newNode);
                 System.out.println("Root: " + newNode.getToken().getValue());
             } else {
                 bst.insert(binaryTree.getRoot(), newNode);
-                avl.insert(binaryTree.getRoot(), newNode);
+                avl.insertBalance(binaryTree.getRoot(), newNode);
                 System.out.println("Inserted: " + newNode.getToken().getValue());
             }
         }
@@ -64,6 +72,7 @@ public class Tokenizer {
         binaryTree.inOrderTraversal();
         binaryTree.posOrderTraversal();
     }
+
 
 
     private Node parseKey(Token token) {
