@@ -10,6 +10,10 @@ public class AVL {
         avltree.setRoot(root);
     }
 
+    public Node getRoot() {
+        return avltree.getRoot(); // para AVL
+    }
+
 
     public Node insertNodeAVL(Node root, Node newNode) {
         if (root == null) {
@@ -108,4 +112,5 @@ public class AVL {
         }
         return current;
     }
+
 }
