@@ -1,5 +1,8 @@
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
+import java.nio.file.*;
 
 public class Main {
   public static void main(String[] args) {
@@ -47,8 +50,17 @@ public class Main {
           filePath = scanner.nextLine();
           if (FilesMethods.validateFile(filePath)) {
             System.out.println("Arquivo ED2 válido");
-            tokensBST = tokenizerBST.tokenize(filePath);
-            tokensAVL = tokenizerAVL.tokenize(filePath);
+
+            Path filePathClass = Paths.get(filePath);
+            String file;
+            try {
+              file = Files.readString(filePathClass);
+            } catch (Exception e) {
+              System.out.println("Erro lendo o arquivo parte 2, java é complicado");
+              break;
+            }
+            tokensBST = tokenizerBST.tokenize(file);
+            tokensAVL = tokenizerAVL.tokenize(file);
           } else {
             System.out.println("Formato de arquivo inválido");
             filePath = ""; // Reseta o filePath se for inválido
@@ -148,4 +160,5 @@ public class Main {
     } while (option != 9);
     scanner.close();
   }
+
 }

@@ -33,9 +33,9 @@ public class Tokenizer {
       return TokenType.COMMENT;
     } else if (value.equals("(") || value.strip().endsWith("(")) {
       return TokenType.SCOPE_START;
-    } else if (value.equals(")")) {
+    } else if (value.strip().endsWith(")")) {
       return TokenType.SCOPE_END;
-    } else if (value.contains("=") || value.strip().endsWith(")")) {
+    } else if (value.contains("=")) {
       return TokenType.KEY;
     } else {
       return TokenType.IDENTIFIER;
@@ -59,16 +59,11 @@ public class Tokenizer {
 
       if (binaryTree.getRoot() == null) {
         binaryTree.setRoot(newNode);
-        System.out.println("Root: " + newNode.getToken().getValue());
       } else {
         bst.insert(binaryTree.getRoot(), newNode);
         avl.insertBalance(binaryTree.getRoot(), newNode);
-        System.out.println("Inserted: " + newNode.getToken().getValue());
       }
     }
-    binaryTree.preOrderTraversal();
-    binaryTree.inOrderTraversal();
-    binaryTree.posOrderTraversal();
   }
 
   private Node parseKey(Token token) {
@@ -89,7 +84,10 @@ public class Tokenizer {
       return null;
     } else if (token.type == TokenType.KEY) {
       return parseKey(token);
-    } else {
+    } else if (token.type == TokenType.IDENTIFIER) {
+      return null;
+    }
+     else {
       int tokenPos = tokensPreparse.indexOf(token);
       int scopeStartPos = token.value.indexOf("(");
       String indentifier = token.value.substring(0, scopeStartPos);
