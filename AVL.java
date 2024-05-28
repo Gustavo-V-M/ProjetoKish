@@ -1,3 +1,8 @@
+// Guilherme Florio Vieira 10409698
+// Arthur Ryuiti Sato Furukawa 10409106
+// Gabriel Fuentes de Freitas Yamashita 10408876
+// Gustavo Vilela Mitraud 10400866
+
 public class AVL {
 
     private final BinaryTree avltree;
@@ -64,10 +69,10 @@ public class AVL {
         return root;
     }
 
-    public void insertBalance(Node root, Node newNode) {
-        insertNodeAVL(root, newNode);
-        avltree.balance(root);
-    }
+        public void insertBalance(Node root, Node newNode) {
+            insertNodeAVL(root, newNode);
+            avltree.balance(root);
+        }
 
     public Node deleteBalance(Node root, int id) {
         Node newRoot = deleteNode(root, id);
