@@ -1,3 +1,8 @@
+// Guilherme Florio Vieira 10409698
+// Arthur Ryuiti Sato Furukawa 10409106
+// Gabriel Fuentes de Freitas Yamashita 10408876
+// Gustavo Vilela Mitraud 10400866
+
 public class BinaryTree {
     private Node root;
 
@@ -222,7 +227,7 @@ public class BinaryTree {
         System.out.println("isRoot? " + node.isRoot());
         System.out.println("Degree:" + node.getDegree());
         System.out.println("Level:" + node.getLevel(this.root, 0));
-        System.out.println("Height:" + node.getNodeHeight(node));
+        System.out.println("Height:" + node.getHeight(node));
         System.out.println();
     }
 
