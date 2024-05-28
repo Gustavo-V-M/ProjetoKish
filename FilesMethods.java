@@ -1,3 +1,8 @@
+// Guilherme Florio Vieira 10409698
+// Arthur Ryuiti Sato Furukawa 10409106
+// Gabriel Fuentes de Freitas Yamashita 10408876
+// Gustavo Vilela Mitraud 10400866
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
