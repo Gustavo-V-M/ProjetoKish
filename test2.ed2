@@ -1,0 +1,11 @@
+root (
+  xyz = abc
+  escopo (
+  chave=valorX
+  escopo
+  (
+    chave = valorY
+  )
+  (
+)
+)
