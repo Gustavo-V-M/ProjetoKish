@@ -1,3 +1,8 @@
+// Guilherme Florio Vieira 10409698
+// Arthur Ryuiti Sato Furukawa 10409106
+// Gabriel Fuentes de Freitas Yamashita 10408876
+// Gustavo Vilela Mitraud 10400866
+
 public class Node {
     private Token token;
     private Node parent;
@@ -13,6 +18,7 @@ public class Node {
         right = null;
         left = null;
         parent = null;
+        height = 1;
         balanceFactor = 0;
         root = null;
     }
@@ -45,8 +51,10 @@ public class Node {
     public void setBalanceFactor(int balanceFactor){
         this.balanceFactor = balanceFactor;
     }
-    public int getHeight() {
-        return height;
+    int getHeight(Node node) {
+        if (node == null)
+            return 0;
+        return node.height;
     }
 
     public void setHeight(int height) {
@@ -91,7 +99,7 @@ public class Node {
         if (node == null) {
             return 0;
         }
-        return getNodeHeight(node.getLeft()) - getNodeHeight(node.getRight());
+        return getHeight(node.getLeft()) - getHeight(node.getRight());
     }
 
     public int getDegree() {
@@ -123,22 +131,19 @@ public class Node {
         if (this == null) {
             return 0;
         }
-        this.balanceFactor = getNodeHeight(this.getLeft()) - getNodeHeight(this.getRight());
+        this.balanceFactor = getHeight(this.getLeft()) - getHeight(this.getRight());
         return this.balanceFactor;
     }
 
-    public int getNodeHeight(Node node) {
-        if (node == null) {
+    public int getNodeHeight(Node root) {
+        if (root == null) {
             return -1;
         }
-        if (node.getHeight() != -1) {
-            return node.getHeight();
-        }
-        int leftHeight = getNodeHeight(node.getLeft());
-        int rightHeight = getNodeHeight(node.getRight());
-        int height = Math.max(leftHeight, rightHeight) + 1;
-        node.setHeight(height);
-        return height;
+
+        int leftHeight = getNodeHeight(root.getLeft());
+        int rightHeight = getNodeHeight(root.getRight());
+
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 
 
