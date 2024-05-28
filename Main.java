@@ -1,3 +1,10 @@
+// Guilherme Florio Vieira 10409698
+// Arthur Ryuiti Sato Furukawa 10409106
+// Gabriel Fuentes de Freitas Yamashita 10408876
+// Gustavo Vilela Mitraud 10400866
+
+//referências utilizadas: https://www.w3schools.com/java/java_files.asp, https://www.geeksforgeeks.org/file-handling-in-java/, aulas e slides anteriores.
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
